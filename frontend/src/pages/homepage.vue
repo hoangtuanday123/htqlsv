@@ -1,6 +1,6 @@
 <template>
     <q-page class="row items-center justify-evenly">
-      <h1>WELLCOME SYSTEM!!!</h1>
+      <h1>WELLCOME USER!!!</h1>
       <!-- <example-component
         title="Example component"
         active
