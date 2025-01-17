@@ -1,7 +1,7 @@
 <template>
     <q-page class="row items-center justify-evenly">
 
-        <q-card >
+        <q-card>
             <q-card-section>
                 <div class="text-h6">Login</div>
 
@@ -30,49 +30,49 @@
 import { api } from '../services/client';
 import { ref } from 'vue'
 
-import {userStore} from '../stores/user'
+import { userStore } from '../stores/user'
 import { storeToRefs } from 'pinia';
 import pinia from '../stores'
-import router from 'src/router/index'
+import router from '../router/index'
 
 const email = ref('')
 const password = ref('')
 // const accept = ref(false)
 
-const loading=ref(false)
+const loading = ref(false)
 
 const _userStore = userStore(pinia())
-const {authToken,userInfo}=storeToRefs(_userStore)
+const { userInfo } = storeToRefs(_userStore)
 
-async function  onSubmit(){
-    loading.value=true
-    const loginreq={
-        username:email.value,
-        password:password.value,
-        grant_type:'password'
-      
+async function onSubmit() {
+    loading.value = true
+    const loginreq = {
+        username: email.value,
+        password: password.value,
+        grant_type: 'password'
+
     }
-    try{
+    try {
         let auth
-        auth=await api.auth.loginAuthLoginPost(loginreq)
-        .then(res=>res.data)
-      
-        if(auth &&auth.access_token){
+        auth = await api.auth.loginAuthLoginPost(loginreq)
+            .then(res => res.data)
+
+        if (auth && auth.access_token) {
             _userStore.saveToken(auth.access_token)
-        
+
             let user
-            user=await api.currentUser.getMeCurrentUserGet().then(res => res.data)
+            user = await api.currentUser.getMeCurrentUserGet().then(res => res.data)
             _userStore.saveUserInfo(user)
-            if (userInfo.value.role=='admin'){
+            if (userInfo.value.role == 'admin') {
                 router.push('/admin')
             }
-            else if (userInfo.value.role=='teacher'){
+            else if (userInfo.value.role == 'teacher') {
                 router.push('/teacher')
             }
-            else{
+            else {
                 router.push('/student')
             }
-            
+
         }
     }
     catch (error) {
@@ -81,14 +81,14 @@ async function  onSubmit(){
         else
             alert('Unknown error occured')
     }
-    finally{
-        
-        loading.value=false
+    finally {
+
+        loading.value = false
     }
-    
+
 }
 
-async function  onReset(){
+async function onReset() {
     email.value = ''
     password.value = ''
     // accept.value = false

@@ -6,19 +6,20 @@
             <q-popup-proxy>
                 <q-banner>
                     <q-form @submit="onSubmit" class="q-gutter-md">
-                        <q-input filled v-model="department_value.name" label="Department *" hint="department" lazy-rules
-                            :rules="[val => val && val.length > 0 || 'Please type something']" />
-                        <q-select v-model="modelhead" :options="headOptions" label="Head" >
-                            
+                        <q-input filled v-model="department_value.name" label="Department *" hint="department"
+                            lazy-rules :rules="[val => val && val.length > 0 || 'Please type something']" />
+                        <q-select v-model="modelhead" :options="headOptions" label="Head">
+
                             <template v-slot:append>
                                 <q-icon name="close" @click.stop.prevent="modelhead = null" class="cursor-pointer" />
                             </template>
 
-                            
+
                         </q-select>
-                        <q-select v-model="modeldeputyhead" :options="deputyheadOptions" label="Deputy Head" >
+                        <q-select v-model="modeldeputyhead" :options="deputyheadOptions" label="Deputy Head">
                             <template v-slot:append>
-                                <q-icon name="close" @click.stop.prevent="modeldeputyhead = null" class="cursor-pointer" />
+                                <q-icon name="close" @click.stop.prevent="modeldeputyhead = null"
+                                    class="cursor-pointer" />
                             </template>
                         </q-select>
                         <div>
@@ -40,14 +41,15 @@
 
                     <q-card-section class="q-pt-none">
                         <q-input dense v-model="department_value.name" autofocus @keyup.enter="prompt = false" />
-                        <q-select  v-model="modelhead" :options="headOptions" label="Head">
+                        <q-select v-model="modelhead" :options="headOptions" label="Head">
                             <template v-slot:append>
                                 <q-icon name="close" @click.stop.prevent="modelhead = null" class="cursor-pointer" />
                             </template>
                         </q-select>
-                        <q-select v-model="modeldeputyhead" :options="deputyheadOptions" label="Deputy head" >
+                        <q-select v-model="modeldeputyhead" :options="deputyheadOptions" label="Deputy head">
                             <template v-slot:append>
-                                <q-icon name="close" @click.stop.prevent="modeldeputyhead = null" class="cursor-pointer" />
+                                <q-icon name="close" @click.stop.prevent="modeldeputyhead = null"
+                                    class="cursor-pointer" />
                             </template>
                         </q-select>
                     </q-card-section>
@@ -80,9 +82,9 @@
 <script setup lang="ts">
 // import { ref, computed, nextTick, toRaw } from 'vue'
 import { ref, computed, onMounted } from 'vue'
-import { Department,DepartmentCreate,DepartmentUpdate,Account,UserSelected } from 'src/services/api'
-import { api } from 'src/services/client'
-import { useCurrentuser } from 'src/share/currentuser'
+import { Department, DepartmentCreate, DepartmentUpdate, UserSelected } from '../../../services/api'
+import { api } from '../../../services/client'
+import { useCurrentuser } from '../../../share/currentuser'
 const currentuser = useCurrentuser()
 const info = currentuser.info
 const departments = ref<Department[]>([])
@@ -125,14 +127,14 @@ async function fetchdepartment() {
 
     const res_heads = await api.user.getteacherUserTeacherGet()
         .then(res => res.data)
-    
+
     const res_deputyheads = await api.user.getteacherUserTeacherGet()
-    .then(res => res.data)
-    .finally(() => { loading.value = false })
+        .then(res => res.data)
+        .finally(() => { loading.value = false })
     departments.value = res_departments
     heads.value = res_heads
     deputyheads.value = res_deputyheads
-    
+
 }
 const headOptions = computed(() => {
     return heads.value.map(head => ({
@@ -180,7 +182,7 @@ async function deletedepartment(department: Department) {
 async function updatedepartment(department: Department) {
     department_value.value.id = department.id
     department_value.value.name = department.name
-   
+
     if (department.head_id) {
         modelhead.value = {};
         modelhead.value.value = department.head_id
@@ -218,7 +220,7 @@ async function editdepartment() {
     let index = departments.value.findIndex(item => item.id === department_value.value.id);
     departments.value.splice(index, 1)
     departments.value.push(res.data)
- 
+
     department_value.value = {
         id: 0,
         name: '',

@@ -6,5 +6,5 @@ if __name__ == "__main__":
         "app:app",
         host=config.HOST,
         reload=config.DEBUG_MODE,
-        port=8080,
+        port=8083,
     )

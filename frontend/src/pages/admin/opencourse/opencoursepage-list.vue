@@ -6,36 +6,41 @@
             <q-popup-proxy>
                 <q-banner>
                     <q-form @submit="onSubmit" class="q-gutter-md">
-                        <q-input filled v-model="opencourse_value.capacity" label="Capacity *" hint="capacity" lazy-rules
-                            :rules="[val => val && val.length > 0 || 'Please type something']" />
-                        <q-input filled v-model="opencourse_value.timetheory" label="Time theory *" hint="time theory"  />
-                        <q-input filled v-model="opencourse_value.timepractice" label="Time practice *" hint="time practice"  />
-                        <q-select v-model="modelcourse" :options="courseOptions" label="Course" >
-                            
+                        <q-input filled v-model="opencourse_value.capacity" label="Capacity *" hint="capacity"
+                            lazy-rules :rules="[val => val && val.length > 0 || 'Please type something']" />
+                        <q-input filled v-model="opencourse_value.timetheory" label="Time theory *"
+                            hint="time theory" />
+                        <q-input filled v-model="opencourse_value.timepractice" label="Time practice *"
+                            hint="time practice" />
+                        <q-select v-model="modelcourse" :options="courseOptions" label="Course">
+
                             <template v-slot:append>
                                 <q-icon name="close" @click.stop.prevent="modelcourse = null" class="cursor-pointer" />
                             </template>
 
-                            
+
                         </q-select>
-                        <q-select v-model="modeltheory" :options="theoryOptions" label="Instructor Theory" >
+                        <q-select v-model="modeltheory" :options="theoryOptions" label="Instructor Theory">
                             <template v-slot:append>
                                 <q-icon name="close" @click.stop.prevent="modeltheory = null" class="cursor-pointer" />
                             </template>
                         </q-select>
-                        <q-select v-model="modelpractice" :options="practiceOptions" label="Instructor practice" >
+                        <q-select v-model="modelpractice" :options="practiceOptions" label="Instructor practice">
                             <template v-slot:append>
-                                <q-icon name="close" @click.stop.prevent="modelpractice = null" class="cursor-pointer" />
+                                <q-icon name="close" @click.stop.prevent="modelpractice = null"
+                                    class="cursor-pointer" />
                             </template>
                         </q-select>
-                        <q-select v-model="modelsemester" :options="semesterOptions" label="Semester" >
+                        <q-select v-model="modelsemester" :options="semesterOptions" label="Semester">
                             <template v-slot:append>
-                                <q-icon name="close" @click.stop.prevent="modelsemester = null" class="cursor-pointer" />
+                                <q-icon name="close" @click.stop.prevent="modelsemester = null"
+                                    class="cursor-pointer" />
                             </template>
                         </q-select>
-                        <q-select v-model="modelclassroom" :options="classroomOptions" label="Classroom" >
+                        <q-select v-model="modelclassroom" :options="classroomOptions" label="Classroom">
                             <template v-slot:append>
-                                <q-icon name="close" @click.stop.prevent="modelclassroom = null" class="cursor-pointer" />
+                                <q-icon name="close" @click.stop.prevent="modelclassroom = null"
+                                    class="cursor-pointer" />
                             </template>
                         </q-select>
                         <div>
@@ -56,36 +61,41 @@
                     </q-card-section>
 
                     <q-card-section class="q-pt-none">
-                        <q-input filled v-model="opencourse_value.capacity" label="Capacity *" hint="capacity" lazy-rules
-                            :rules="[val => val && val.length > 0 || 'Please type something']" />
-                        <q-input filled v-model="opencourse_value.timetheory" label="Time theory *" hint="time theory"  />
-                        <q-input filled v-model="opencourse_value.timepractice" label="Time practice *" hint="time practice"  />
-                        <q-select v-model="modelcourse" :options="courseOptions" label="Course" >
-                            
+                        <q-input filled v-model="opencourse_value.capacity" label="Capacity *" hint="capacity"
+                            lazy-rules :rules="[val => val && val.length > 0 || 'Please type something']" />
+                        <q-input filled v-model="opencourse_value.timetheory" label="Time theory *"
+                            hint="time theory" />
+                        <q-input filled v-model="opencourse_value.timepractice" label="Time practice *"
+                            hint="time practice" />
+                        <q-select v-model="modelcourse" :options="courseOptions" label="Course">
+
                             <template v-slot:append>
                                 <q-icon name="close" @click.stop.prevent="modelcourse = null" class="cursor-pointer" />
                             </template>
 
-                            
+
                         </q-select>
-                        <q-select v-model="modeltheory" :options="theoryOptions" label="Instructor Theory" >
+                        <q-select v-model="modeltheory" :options="theoryOptions" label="Instructor Theory">
                             <template v-slot:append>
                                 <q-icon name="close" @click.stop.prevent="modeltheory = null" class="cursor-pointer" />
                             </template>
                         </q-select>
-                        <q-select v-model="modelpractice" :options="practiceOptions" label="Instructor practice" >
+                        <q-select v-model="modelpractice" :options="practiceOptions" label="Instructor practice">
                             <template v-slot:append>
-                                <q-icon name="close" @click.stop.prevent="modelpractice = null" class="cursor-pointer" />
+                                <q-icon name="close" @click.stop.prevent="modelpractice = null"
+                                    class="cursor-pointer" />
                             </template>
                         </q-select>
-                        <q-select v-model="modelsemester" :options="semesterOptions" label="Semester" >
+                        <q-select v-model="modelsemester" :options="semesterOptions" label="Semester">
                             <template v-slot:append>
-                                <q-icon name="close" @click.stop.prevent="modelsemester = null" class="cursor-pointer" />
+                                <q-icon name="close" @click.stop.prevent="modelsemester = null"
+                                    class="cursor-pointer" />
                             </template>
                         </q-select>
-                        <q-select v-model="modelclassroom" :options="classroomOptions" label="Classroom" >
+                        <q-select v-model="modelclassroom" :options="classroomOptions" label="Classroom">
                             <template v-slot:append>
-                                <q-icon name="close" @click.stop.prevent="modelclassroom = null" class="cursor-pointer" />
+                                <q-icon name="close" @click.stop.prevent="modelclassroom = null"
+                                    class="cursor-pointer" />
                             </template>
                         </q-select>
                         <q-checkbox v-model="opencourse_value.is_open" label="Is Open" />
@@ -109,8 +119,8 @@
             @focusin="activateNavigation" @focusout="deactivateNavigation">
             <template v-slot:body-cell-actions="props">
                 <q-td :props="props" auto-width style="min-width: 120px;">
-                    <q-btn round icon="visibility" :to="'./opencourse/' + props.row.id + '/viewstudent'"
-                        color="primary" flat />
+                    <q-btn round icon="visibility" :to="'./opencourse/' + props.row.id + '/viewstudent'" color="primary"
+                        flat />
                     <q-btn round icon="edit" @click="updateopencourse(props.row)" color="primary" flat />
                     <q-btn round icon="delete" color="red" class="q-ml-sm" @click="deleteopencourse(props.row)" flat />
                 </q-td>
@@ -118,14 +128,14 @@
             <template v-slot:body-cell-is_open="props">
                 <q-td :props="props">
                     <div>
-                        <q-badge :color="props.row.is_open ? 'green' : 'grey'"/>
+                        <q-badge :color="props.row.is_open ? 'green' : 'grey'" />
                     </div>
                 </q-td>
             </template>
             <template v-slot:body-cell-is_end="props">
                 <q-td :props="props">
                     <div>
-                        <q-badge :color="props.row.is_end ? 'green' : 'grey'"/>
+                        <q-badge :color="props.row.is_end ? 'green' : 'grey'" />
                     </div>
                 </q-td>
             </template>
@@ -136,9 +146,9 @@
 <script setup lang="ts">
 // import { ref, computed, nextTick, toRaw } from 'vue'
 import { ref, computed, onMounted } from 'vue'
-import { Opencourse,OpencourseCreate,OpencourseUpdate,Course,Account,Semester,Classroom,UserSelected } from 'src/services/api'
-import { api } from 'src/services/client'
-import { useCurrentuser } from 'src/share/currentuser'
+import { Opencourse, OpencourseCreate, Course, Semester, Classroom, UserSelected } from '../../../services/api'
+import { api } from '../../../services/client'
+import { useCurrentuser } from '../../../share/currentuser'
 const currentuser = useCurrentuser()
 const info = currentuser.info
 const opencourses = ref<Opencourse[]>([])
@@ -157,15 +167,15 @@ const opencourse_value = ref<Opencourse>({
     id: 0,
     createddated: new Date().toISOString(),
     createdby: '',
-    capacity:0,
-    timetheory:'',
-    timepractice:'',
-    status:'',
-    is_open:false,
-    is_end:false,
-    course_id:0,
-    instructor_theory_id:0,
-    instructor_practice_id:0,
+    capacity: 0,
+    timetheory: '',
+    timepractice: '',
+    status: '',
+    is_open: false,
+    is_end: false,
+    course_id: 0,
+    instructor_theory_id: 0,
+    instructor_practice_id: 0,
     semester_id: 0,
     classroom_id: 0,
 
@@ -179,17 +189,17 @@ const columns = [
     { name: 'course', label: 'Course', field: 'course', sortable: true },
     { name: 'capacity', label: 'Capacity', field: 'capacity', sortable: true },
     { name: 'instructor_theory', label: 'Instructor theory', field: 'instructor_theory', sortable: true },
-    {name: 'instructor_practice', label: 'Instructor practice', field: 'instructor_practice', sortable: true },
-    {name: 'semester', label: 'Semester', field: 'semester', sortable: true },
-    {name: 'classroom', label: 'Classroom', field: 'classroom', sortable: true },
-    {name: 'timetheory', label: 'Time theory', field: 'timetheory', sortable: true },
-    {name: 'timepractice', label: 'Time practice', field: 'timepractice', sortable: true },
-    {name: 'status', label: 'Status', field: 'status', sortable: true },
-    {name: 'number_of_student', label: 'Number Student', field: 'number_of_student', sortable: true },
+    { name: 'instructor_practice', label: 'Instructor practice', field: 'instructor_practice', sortable: true },
+    { name: 'semester', label: 'Semester', field: 'semester', sortable: true },
+    { name: 'classroom', label: 'Classroom', field: 'classroom', sortable: true },
+    { name: 'timetheory', label: 'Time theory', field: 'timetheory', sortable: true },
+    { name: 'timepractice', label: 'Time practice', field: 'timepractice', sortable: true },
+    { name: 'status', label: 'Status', field: 'status', sortable: true },
+    { name: 'number_of_student', label: 'Number Student', field: 'number_of_student', sortable: true },
     { name: 'createddated', label: 'Created date', field: 'createddated', sortable: true },
     { name: 'createdby', label: 'created by', field: 'createdby', sortable: true },
-    {name: 'is_open', label: 'Is open', field: 'is_open', sortable: true },
-    {name: 'is_end', label: 'Is end', field: 'is_end', sortable: true },
+    { name: 'is_open', label: 'Is open', field: 'is_open', sortable: true },
+    { name: 'is_end', label: 'Is end', field: 'is_end', sortable: true },
     { name: 'actions', label: 'Actions', field: 'actions', sortable: false, align: 'center' as const }
 ]
 const modelcourse = ref(null)
@@ -204,24 +214,24 @@ async function fetchopencourse() {
 
     const res_courses = await api.course.getcourseCourseGet()
         .then(res => res.data)
-    
+
     const res_theories = await api.user.getteacherUserTeacherGet()
-    .then(res => res.data)
+        .then(res => res.data)
     const res_practices = await api.user.getteacherUserTeacherGet()
-    .then(res => res.data)
+        .then(res => res.data)
     const res_semesters = await api.semester.getsemesterSemesterGet()
-    .then(res => res.data)
-    
+        .then(res => res.data)
+
     const res_classrooms = await api.classroom.getclassroomClassroomGet()
-    .then(res => res.data)
-    .finally(() => { loading.value = false })
+        .then(res => res.data)
+        .finally(() => { loading.value = false })
     opencourses.value = res_opencourses
     courses.value = res_courses
     theorys.value = res_theories
-    practices.value=res_practices
-    semesters.value=res_semesters
-    classrooms.value=res_classrooms
-    
+    practices.value = res_practices
+    semesters.value = res_semesters
+    classrooms.value = res_classrooms
+
 }
 const courseOptions = computed(() => {
     return courses.value.map(course => ({
@@ -345,40 +355,40 @@ async function editopencourse() {
     loading.value = true
     var a: OpencourseCreate = {
         capacity: opencourse_value.value.capacity,
-        timetheory:opencourse_value.value.timetheory,
-        timepractice:opencourse_value.value.timepractice,
+        timetheory: opencourse_value.value.timetheory,
+        timepractice: opencourse_value.value.timepractice,
         createddated: new Date().toISOString(),
         createdby: info.value.fullname || '',
-        is_open:opencourse_value.value.is_open,
-        is_end:opencourse_value.value.is_end,
-        course_id:modelcourse.value.value ,
+        is_open: opencourse_value.value.is_open,
+        is_end: opencourse_value.value.is_end,
+        course_id: modelcourse.value.value,
         instructor_theory_id: modeltheory.value ? modeltheory.value.value : null,
         instructor_practice_id: modelpractice.value ? modelpractice.value.value : null,
         semester_id: modelsemester.value ? modelsemester.value.value : null,
         classroom_id: modelclassroom.value ? modelclassroom.value.value : null,
-        status:''
+        status: ''
     }
-    
+
     const res = await api.opencourse.updateopencourseOpencourseIdUpdatePatch(Number(opencourse_value.value.id), a)
     let index = opencourses.value.findIndex(item => item.id === opencourse_value.value.id);
     opencourses.value.splice(index, 1)
     opencourses.value.push(res.data)
- 
+
     opencourse_value.value = {
         id: 0,
-    createddated: new Date().toISOString(),
-    createdby: '',
-    capacity:0,
-    timetheory:'',
-    timepractice:'',
-    status:'',
-    is_open:false,
-    is_end:false,
-    course_id:0,
-    instructor_theory_id:0,
-    instructor_practice_id:0,
-    semester_id: 0,
-    classroom_id: 0,
+        createddated: new Date().toISOString(),
+        createdby: '',
+        capacity: 0,
+        timetheory: '',
+        timepractice: '',
+        status: '',
+        is_open: false,
+        is_end: false,
+        course_id: 0,
+        instructor_theory_id: 0,
+        instructor_practice_id: 0,
+        semester_id: 0,
+        classroom_id: 0,
 
     }
     modelcourse.value = null
@@ -396,14 +406,14 @@ async function onSubmit() {
         timepractice: opencourse_value.value.timepractice || '',
         createddated: new Date().toISOString(),
         createdby: info.value.fullname || '',
-        status:'created',
-        is_open:false,
-        is_end:false,
-        course_id:  modelcourse.value.value ,
+        status: 'created',
+        is_open: false,
+        is_end: false,
+        course_id: modelcourse.value.value,
         instructor_theory_id: modeltheory.value ? modeltheory.value.value : null,
         instructor_practice_id: modelpractice.value ? modelpractice.value.value : null,
         semester_id: modelsemester.value ? modelsemester.value.value : null,
-        classroom_id:modelclassroom.value ? modelclassroom.value.value : null,
+        classroom_id: modelclassroom.value ? modelclassroom.value.value : null,
     }
     console.log(a)
     const res = await api.opencourse.createopencourseOpencoursePost(a)
@@ -424,7 +434,7 @@ function canceledit() {
     opencourse_value.value.capacity = 0
     opencourse_value.value.timetheory = ''
     opencourse_value.value.timepractice = ''
-    opencourse_value.value.is_open=false
+    opencourse_value.value.is_open = false
     opencourse_value.value.createddated = new Date().toISOString()
     opencourse_value.value.createdby = ''
     opencourse_value.value.course_id = 0

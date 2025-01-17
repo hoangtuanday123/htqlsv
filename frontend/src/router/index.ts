@@ -7,7 +7,7 @@ import {
 } from 'vue-router';
 
 import routes from './routes';
-import { userStore } from 'src/stores/user'
+import { userStore } from '../stores/user'
 import { storeToRefs } from 'pinia'
 
 

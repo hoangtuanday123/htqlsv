@@ -1,36 +1,33 @@
 <template>
-   <div class="q-pa-md">
+    <div class="q-pa-md">
 
 
-<div>
+        <div>
 
-    <q-dialog v-model="prompt" persistent>
-        <q-card style="min-width: 350px">
-            <q-card-section>
-                <div class="text-h6">{{ student }}</div>
-            </q-card-section>
+            <q-dialog v-model="prompt" persistent>
+                <q-card style="min-width: 350px">
+                    <q-card-section>
+                        <div class="text-h6">{{ student }}</div>
+                    </q-card-section>
 
-            <q-card-section class="q-pt-none">
-                <q-input autofocus  v-model.number="theory" type="number" filled 
-                    label="Theory Grade" />
+                    <q-card-section class="q-pt-none">
+                        <q-input autofocus v-model.number="theory" type="number" filled label="Theory Grade" />
 
-                <q-input autofocus v-model.number="practice" type="number" filled  
-                    label="Practice Grade" />
+                        <q-input autofocus v-model.number="practice" type="number" filled label="Practice Grade" />
 
-                <q-input autofocus v-model.number="bonus" type="number" filled 
-                    label="Bonus Grade" />
+                        <q-input autofocus v-model.number="bonus" type="number" filled label="Bonus Grade" />
 
-            </q-card-section>
+                    </q-card-section>
 
-            <q-card-actions align="right" class="text-primary">
-                <q-btn flat label="Cancel" v-close-popup @click="canceledit" />
-                <q-btn flat label="Add" @click="updategrade" v-close-popup />
-            </q-card-actions>
-        </q-card>
-    </q-dialog>
+                    <q-card-actions align="right" class="text-primary">
+                        <q-btn flat label="Cancel" v-close-popup @click="canceledit" />
+                        <q-btn flat label="Add" @click="updategrade" v-close-popup />
+                    </q-card-actions>
+                </q-card>
+            </q-dialog>
 
-</div>
-</div>
+        </div>
+    </div>
 
     <div class="q-pa-md">
         <q-table flat bordered ref="tableRef" :class="tableClass" :loading="loading" tabindex="0" title="Enrollments"
@@ -46,23 +43,21 @@
     </div>
 
     <div class="row">
-                <div class="col q-gutter-md">
-                    
-                    <q-btn label="Close" icon="close" type="button" to="../../opencourse" outline
-                        text-color="text-color" />
-                </div>
-            </div>
+        <div class="col q-gutter-md">
+
+            <q-btn label="Close" icon="close" type="button" to="../../opencourse" outline text-color="text-color" />
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
 // import { ref, computed, nextTick, toRaw } from 'vue'
 import { ref, computed, onMounted } from 'vue'
-import { Enrollment,EnrollmentUpdate } from 'src/services/api'
-import { api } from 'src/services/client'
+import { Enrollment, EnrollmentUpdate } from '../../../services/api'
+import { api } from '../../../services/client'
 import { useRoute } from 'vue-router'
-import { useCurrentuser } from 'src/share/currentuser'
-import { it } from 'node:test';
-import { NONAME } from 'node:dns';
+import { useCurrentuser } from '../../../share/currentuser'
+
 const route = useRoute()
 const currentuser = useCurrentuser()
 const info = currentuser.info
@@ -107,9 +102,9 @@ async function fetchenrollment() {
     const res_enrollments = await api.opencourse.getopencourseUserOpencourseIdUsersGet(Number(route.params.id))
         .then(res => res.data)
         .finally(() => { loading.value = false })
-    enrollments.value=res_enrollments
-   
-   
+    enrollments.value = res_enrollments
+
+
 }
 
 
@@ -176,20 +171,20 @@ function calculateGpa(
     return { totalScore, gpa };
 }
 async function updategrade() {
-    loading.value=true
-    const { totalScore, gpa } = calculateGpa(theory.value, practice.value, bonus.value);
-    
-    const a:EnrollmentUpdate={
+    loading.value = true
+    const { gpa } = calculateGpa(theory.value, practice.value, bonus.value);
+
+    const a: EnrollmentUpdate = {
         createddated: new Date().toISOString(),
         createdby: info.value.fullname || '',
-        grade_bonus:bonus.value,
-        grade_practice:practice.value,
-        grade_theory:theory.value,
-        GPA:gpa,
-        status:'registering'
+        grade_bonus: bonus.value,
+        grade_practice: practice.value,
+        grade_theory: theory.value,
+        GPA: gpa,
+        status: 'registering'
     }
-   
-    const res = await api.enrollment.updateenrollmentEnrollmentIdUpdatePatch(Number(enrollment_id.value),a)
+
+    const res = await api.enrollment.updateenrollmentEnrollmentIdUpdatePatch(Number(enrollment_id.value), a)
         .then(res => res.data)
 
     let index = enrollments.value.findIndex(item => item.id === Number(route.params.id));
@@ -202,7 +197,7 @@ async function updategrade() {
     theory.value = 0
     practice.value = 0
     bonus.value = 0
-    loading.value=false
+    loading.value = false
 }
 function canceledit() {
     enrollment_id.value = ''

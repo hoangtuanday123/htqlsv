@@ -21,10 +21,10 @@
             <template v-slot:body-cell-actions="props">
                 <q-td :props="props" auto-width style="min-width: 120px;">
                     <q-btn round icon="add" @click="addenrollment(props.row)" color="primary" flat />
-                    
+
                 </q-td>
             </template>
-            
+
         </q-table>
     </div>
 </template>
@@ -32,23 +32,22 @@
 <script setup lang="ts">
 // import { ref, computed, nextTick, toRaw } from 'vue'
 import { ref, computed, onMounted } from 'vue'
-import { Enrollment,Account,UserSelected,Opencourse, EnrollmentCreate } from 'src/services/api'
-import { api } from 'src/services/client'
-import { useCurrentuser } from 'src/share/currentuser'
-import { it } from 'node:test';
-import { NONAME } from 'node:dns';
+import { Enrollment, Opencourse, EnrollmentCreate } from '../../../services/api'
+import { api } from '../../../services/client'
+import { useCurrentuser } from '../../../share/currentuser'
+
 const currentuser = useCurrentuser()
 const info = currentuser.info
 const enrollments = ref<Enrollment[]>([])
 
-const opencourses=ref<Opencourse[]>([])
+const opencourses = ref<Opencourse[]>([])
 const tableRef = ref(null)
 const loading = ref(false)
 const navigationActive = ref(false)
 const pagination = ref({})
 const selected = ref([])
 
-const prompt = ref(false)
+
 
 
 const filter = ref('')
@@ -77,16 +76,16 @@ const Opencoursecolumns = [
     { name: 'course', label: 'Course', field: 'course', sortable: true },
     { name: 'capacity', label: 'Capacity', field: 'capacity', sortable: true },
     { name: 'instructor_theory', label: 'Instructor theory', field: 'instructor_theory', sortable: true },
-    {name: 'instructor_practice', label: 'Instructor practice', field: 'instructor_practice', sortable: true },
-    {name: 'semester', label: 'Semester', field: 'semester', sortable: true },
-    {name: 'classroom', label: 'Classroom', field: 'classroom', sortable: true },
-    {name: 'timetheory', label: 'Time theory', field: 'timetheory', sortable: true },
-    {name: 'timepractice', label: 'Time practice', field: 'timepractice', sortable: true },
-    {name: 'status', label: 'Status', field: 'status', sortable: true },
+    { name: 'instructor_practice', label: 'Instructor practice', field: 'instructor_practice', sortable: true },
+    { name: 'semester', label: 'Semester', field: 'semester', sortable: true },
+    { name: 'classroom', label: 'Classroom', field: 'classroom', sortable: true },
+    { name: 'timetheory', label: 'Time theory', field: 'timetheory', sortable: true },
+    { name: 'timepractice', label: 'Time practice', field: 'timepractice', sortable: true },
+    { name: 'status', label: 'Status', field: 'status', sortable: true },
     { name: 'createddated', label: 'Created date', field: 'createddated', sortable: true },
     { name: 'createdby', label: 'created by', field: 'createdby', sortable: true },
-    {name: 'number_of_student', label: 'Number Student', field: 'number_of_student', sortable: true },
-    {name: 'is_open', label: 'Is open', field: 'is_open', sortable: true },
+    { name: 'number_of_student', label: 'Number Student', field: 'number_of_student', sortable: true },
+    { name: 'is_open', label: 'Is open', field: 'is_open', sortable: true },
     { name: 'actions', label: 'Actions', field: 'actions', sortable: false, align: 'center' as const }
 ]
 
@@ -94,14 +93,14 @@ async function fetchenrollment() {
     loading.value = true
     const res_courses = await api.enrollment.getenrollmentStudentEnrollmentStudentGet()
         .then(res => res.data)
-   
-    const res_opencourse_open=await api.opencourse.getopencourseOpenOpencourseOpenGet()
-    .then(res=>res.data)
+
+    const res_opencourse_open = await api.opencourse.getopencourseOpenOpencourseOpenGet()
+        .then(res => res.data)
         .finally(() => { loading.value = false })
-    enrollments.value=res_courses
-   
-    opencourses.value=res_opencourse_open
-   
+    enrollments.value = res_courses
+
+    opencourses.value = res_opencourse_open
+
 }
 
 
@@ -123,52 +122,52 @@ async function deactivateNavigation() {
     navigationActive.value = false
 }
 
-async function deleteenrollment(enrollment:Enrollment) {
+async function deleteenrollment(enrollment: Enrollment) {
     if (confirm('Are you sure? This cannot be undone')) {
         loading.value = true
-        const result=await api.enrollment.deleteenrollmentEnrollmentIdDeleteDelete(enrollment.id)
+        const result = await api.enrollment.deleteenrollmentEnrollmentIdDeleteDelete(enrollment.id)
             .then(res => res.data)
-      
-        if( result>0){
-                enrollments.value.splice(enrollments.value.indexOf(enrollment), 1);
-                const res_opencourse=await api.opencourse.decreasedopencourseOpencourseIdDecreasedPatch(Number(enrollment.open_course_id))
-                .then(res=>res.data)
-                let index = opencourses.value.findIndex(item => item.id === Number(enrollment.open_course_id));
-                opencourses.value.splice(index, 1)
-                opencourses.value.push(res_opencourse)
-            }
-        loading.value=false  
-            
+
+        if (result > 0) {
+            enrollments.value.splice(enrollments.value.indexOf(enrollment), 1);
+            const res_opencourse = await api.opencourse.decreasedopencourseOpencourseIdDecreasedPatch(Number(enrollment.open_course_id))
+                .then(res => res.data)
+            let index = opencourses.value.findIndex(item => item.id === Number(enrollment.open_course_id));
+            opencourses.value.splice(index, 1)
+            opencourses.value.push(res_opencourse)
+        }
+        loading.value = false
+
     }
 
 }
 
-async function addenrollment(opencourse:Opencourse) {
-    loading.value=true
-    
-    const a:EnrollmentCreate={
+async function addenrollment(opencourse: Opencourse) {
+    loading.value = true
+
+    const a: EnrollmentCreate = {
         createddated: new Date().toISOString(),
         createdby: info.value.fullname || '',
-        grade_bonus:0,
-        grade_practice:0,
-        grade_theory:0,
-        GPA:0,
-        status:'registering',
-        student_id:Number(info.value.id),
-        open_course_id:Number(opencourse.id)
+        grade_bonus: 0,
+        grade_practice: 0,
+        grade_theory: 0,
+        GPA: 0,
+        status: 'registering',
+        student_id: Number(info.value.id),
+        open_course_id: Number(opencourse.id)
     }
     const res = await api.enrollment.registerenrollmentEnrollmentPost(a)
         .then(res => res.data)
-    const res_opencourse=await api.opencourse.increasedopencourseOpencourseIdIncreasedPatch(Number(opencourse.id))
-    .then(res=>res.data)
+    const res_opencourse = await api.opencourse.increasedopencourseOpencourseIdIncreasedPatch(Number(opencourse.id))
+        .then(res => res.data)
     let index = opencourses.value.findIndex(item => item.id === Number(opencourse.id));
     opencourses.value.splice(index, 1)
     opencourses.value.push(res_opencourse)
-    
-    
-    
+
+
+
     enrollments.value.push(res);
-    loading.value=false
+    loading.value = false
 }
 
 onMounted(async () => {

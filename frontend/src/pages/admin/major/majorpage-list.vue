@@ -8,22 +8,24 @@
                     <q-form @submit="onSubmit" class="q-gutter-md">
                         <q-input filled v-model="major_value.name" label="Major *" hint="Major" lazy-rules
                             :rules="[val => val && val.length > 0 || 'Please type something']" />
-                        <q-select v-model="modelhead" :options="headOptions" label="Head" >
-                            
+                        <q-select v-model="modelhead" :options="headOptions" label="Head">
+
                             <template v-slot:append>
                                 <q-icon name="close" @click.stop.prevent="modelhead = null" class="cursor-pointer" />
                             </template>
 
-                            
+
                         </q-select>
-                        <q-select v-model="modeldeputyhead" :options="deputyheadOptions" label="Deputy Head" >
+                        <q-select v-model="modeldeputyhead" :options="deputyheadOptions" label="Deputy Head">
                             <template v-slot:append>
-                                <q-icon name="close" @click.stop.prevent="modeldeputyhead = null" class="cursor-pointer" />
+                                <q-icon name="close" @click.stop.prevent="modeldeputyhead = null"
+                                    class="cursor-pointer" />
                             </template>
                         </q-select>
-                        <q-select v-model="modeldepartment" :options="departmentOptions" label="Department" >
+                        <q-select v-model="modeldepartment" :options="departmentOptions" label="Department">
                             <template v-slot:append>
-                                <q-icon name="close" @click.stop.prevent="modeldepartment = null" class="cursor-pointer" />
+                                <q-icon name="close" @click.stop.prevent="modeldepartment = null"
+                                    class="cursor-pointer" />
                             </template>
                         </q-select>
                         <div>
@@ -45,19 +47,21 @@
 
                     <q-card-section class="q-pt-none">
                         <q-input dense v-model="major_value.name" autofocus @keyup.enter="prompt = false" />
-                        <q-select  v-model="modelhead" :options="headOptions" label="Head">
+                        <q-select v-model="modelhead" :options="headOptions" label="Head">
                             <template v-slot:append>
                                 <q-icon name="close" @click.stop.prevent="modelhead = null" class="cursor-pointer" />
                             </template>
                         </q-select>
-                        <q-select v-model="modeldeputyhead" :options="deputyheadOptions" label="Deputy Head" >
+                        <q-select v-model="modeldeputyhead" :options="deputyheadOptions" label="Deputy Head">
                             <template v-slot:append>
-                                <q-icon name="close" @click.stop.prevent="modeldeputyhead = null" class="cursor-pointer" />
+                                <q-icon name="close" @click.stop.prevent="modeldeputyhead = null"
+                                    class="cursor-pointer" />
                             </template>
                         </q-select>
-                        <q-select v-model="modeldepartment" :options="departmentOptions" label="Department" >
+                        <q-select v-model="modeldepartment" :options="departmentOptions" label="Department">
                             <template v-slot:append>
-                                <q-icon name="close" @click.stop.prevent="modeldepartment = null" class="cursor-pointer" />
+                                <q-icon name="close" @click.stop.prevent="modeldepartment = null"
+                                    class="cursor-pointer" />
                             </template>
                         </q-select>
                     </q-card-section>
@@ -74,9 +78,9 @@
 
     <div class="q-pa-md">
         <q-table flat bordered ref="tableRef" :class="tableClass" :loading="loading" tabindex="0" title="Majors"
-            :rows="majors" :columns="columns" row-key="id" :selected-rows-label="getSelectedString"
-            selection="multiple" v-model:selected="selected" v-model:pagination="pagination" :filter="filter"
-            @focusin="activateNavigation" @focusout="deactivateNavigation">
+            :rows="majors" :columns="columns" row-key="id" :selected-rows-label="getSelectedString" selection="multiple"
+            v-model:selected="selected" v-model:pagination="pagination" :filter="filter" @focusin="activateNavigation"
+            @focusout="deactivateNavigation">
             <template v-slot:body-cell-actions="props">
                 <q-td :props="props" auto-width style="min-width: 120px;">
                     <q-btn round icon="edit" @click="updatemajor(props.row)" color="primary" flat />
@@ -90,15 +94,15 @@
 <script setup lang="ts">
 // import { ref, computed, nextTick, toRaw } from 'vue'
 import { ref, computed, onMounted } from 'vue'
-import { Major,MajorCreate,MajorUpdate,Account,Department } from 'src/services/api'
-import { api } from 'src/services/client'
-import { useCurrentuser } from 'src/share/currentuser'
+import { Major, MajorCreate, MajorUpdate, Department, UserSelected } from '../../../services/api'
+import { api } from '../../../services/client'
+import { useCurrentuser } from '../../../share/currentuser'
 const currentuser = useCurrentuser()
 const info = currentuser.info
 const departments = ref<Department[]>([])
-const heads = ref<Account[]>([])
-const deputyheads = ref<Account[]>([])
-const majors=ref<Major[]>([])
+const heads = ref<UserSelected[]>([])
+const deputyheads = ref<UserSelected[]>([])
+const majors = ref<Major[]>([])
 const tableRef = ref(null)
 const loading = ref(false)
 const navigationActive = ref(false)
@@ -112,7 +116,7 @@ const major_value = ref<Major>({
     createdby: '',
     head_id: 0,
     deputy_head_id: 0,
-    department_id:0
+    department_id: 0
 
 })
 const prompt = ref(false)
@@ -142,15 +146,15 @@ async function fetchmajor() {
 
     const res_heads = await api.user.getteacherUserTeacherGet()
         .then(res => res.data)
-    
+
     const res_deputyheads = await api.user.getteacherUserTeacherGet()
-    .then(res => res.data)
-    .finally(() => { loading.value = false })
-    majors.value=res_majors
+        .then(res => res.data)
+        .finally(() => { loading.value = false })
+    majors.value = res_majors
     departments.value = res_departments
     heads.value = res_heads
     deputyheads.value = res_deputyheads
-    
+
 }
 const headOptions = computed(() => {
     return heads.value.map(head => ({
@@ -204,7 +208,7 @@ async function deletemajor(major: Major) {
 async function updatemajor(major: Major) {
     major_value.value.id = major.id
     major_value.value.name = major.name
-   
+
     if (major.head_id) {
         modelhead.value = {};
         modelhead.value.value = major.head_id
@@ -251,7 +255,7 @@ async function editmajor() {
     let index = majors.value.findIndex(item => item.id === major_value.value.id);
     majors.value.splice(index, 1)
     majors.value.push(res.data)
- 
+
     major_value.value = {
         id: 0,
         name: '',
@@ -259,7 +263,7 @@ async function editmajor() {
         createdby: '',
         head_id: 0,
         deputy_head_id: 0,
-        department_id:0
+        department_id: 0
 
     }
     modelhead.value = null

@@ -134,10 +134,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: '/teacher/opencourse', // Relative path
             children: [
-              {
-                path: '', // Default route for /student/opencourse
-                component: () => import('pages/student/opencourse/opencoursepage-list.vue')
-              },
+              // {
+              //   path: '', // Default route for /student/opencourse
+              //   component: () => import('pages/student/opencourse/opencoursepage-list.vue')
+              // },
               {
                 path: ':id/viewstudent', // This is a relative path
                 component: () => import('pages/teacher/opencourse/opencoursestudentpage-view.vue')

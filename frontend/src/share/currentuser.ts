@@ -1,7 +1,7 @@
 
 import {userStore} from '../stores/user'
 import { storeToRefs } from 'pinia';
-import route from 'src/router/index'
+import route from '../router/index'
 export function useCurrentuser(){
     const _userStore=userStore()
     const {userInfo}=storeToRefs(_userStore)

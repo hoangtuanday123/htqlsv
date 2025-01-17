@@ -6,10 +6,10 @@
                 <q-banner>
                     <q-form @submit="onSubmit" class="q-gutter-md">
                         <q-input filled v-model="course_value.name" label="Course name *" hint="course name" lazy-rules
-                        :rules="[val => val && val.length > 0 || 'Please type something']" />
+                            :rules="[val => val && val.length > 0 || 'Please type something']" />
                         <q-input filled v-model="course_value.credit" label="Credit *" hint="credit" lazy-rules
-                        :rules="[val => val && val.length > 0 || 'Please type something']" />
-                        <q-select v-model="modelmajor" :options="majorOptions" label="Major" >
+                            :rules="[val => val && val.length > 0 || 'Please type something']" />
+                        <q-select v-model="modelmajor" :options="majorOptions" label="Major">
                             <template v-slot:append>
                                 <q-icon name="close" @click.stop.prevent="modelmajor = null" class="cursor-pointer" />
                             </template>
@@ -31,12 +31,12 @@
                     <q-card-section class="q-pt-none">
                         <q-input dense v-model="course_value.name" autofocus @keyup.enter="prompt = false" />
                         <q-input dense v-model="course_value.credit" autofocus @keyup.enter="prompt = false" />
-                        <q-select  v-model="modelmajor" :options="majorOptions" label="Teacher">
+                        <q-select v-model="modelmajor" :options="majorOptions" label="Teacher">
                             <template v-slot:append>
                                 <q-icon name="close" @click.stop.prevent="modelmajor = null" class="cursor-pointer" />
                             </template>
                         </q-select>
-                        
+
                     </q-card-section>
 
                     <q-card-actions align="right" class="text-primary">
@@ -67,9 +67,9 @@
 <script setup lang="ts">
 // import { ref, computed, nextTick, toRaw } from 'vue'
 import { ref, computed, onMounted } from 'vue'
-import { Course, Major, CourseCreate, CourseUpdate } from 'src/services/api'
-import { api } from 'src/services/client'
-import { useCurrentuser } from 'src/share/currentuser'
+import { Course, Major, CourseCreate, CourseUpdate } from '../../../services/api'
+import { api } from '../../../services/client'
+import { useCurrentuser } from '../../../share/currentuser'
 const currentuser = useCurrentuser()
 const info = currentuser.info
 const courses = ref<Course[]>([])
@@ -84,8 +84,8 @@ const selected = ref([])
 const course_value = ref<Course>({
     id: 0,
     name: '',
-    credit:0,
-    totalprice:0,
+    credit: 0,
+    totalprice: 0,
     createddated: new Date().toISOString(),
     createdby: '',
     major_id: 0
@@ -117,7 +117,7 @@ async function fetchcourse() {
 
     courses.value = res_courses;
     majors.value = res_major
-   
+
 }
 
 const majorOptions = computed(() => {
@@ -158,11 +158,11 @@ async function deleteclass(course: Course) {
 
 async function updatecourse(course: Course) {
     course_value.value.id = course.id
-    course_value.value.credit=course.credit
+    course_value.value.credit = course.credit
     course_value.value.createddated = course.createddated
     course_value.value.name = course.name
     course_value.value.createdby = course.createdby
-    
+
     if (course.major_id) {
         modelmajor.value = {};
         modelmajor.value.value = course.major_id
@@ -172,7 +172,7 @@ async function updatecourse(course: Course) {
     else {
         modelmajor.value = null
     }
-   
+
 
     prompt.value = true
 
@@ -181,15 +181,15 @@ async function updatecourse(course: Course) {
 async function editcourse() {
 
     loading.value = true
-    var totalprice=course_value.value.credit*1000000
+    var totalprice = course_value.value.credit * 1000000
     var a: CourseUpdate = {
         name: course_value.value.name,
-        credit:course_value.value.credit,
-        totalprice:totalprice,
+        credit: course_value.value.credit,
+        totalprice: totalprice,
         createddated: new Date().toISOString(),
         createdby: info.value.fullname || '',
         major_id: modelmajor.value ? modelmajor.value.value : null,
- 
+
     }
 
     const res = await api.course.updatecourseCourseIdUpdatePatch(Number(course_value.value.id), a)
@@ -199,36 +199,36 @@ async function editcourse() {
     console.log(res.data)
     course_value.value = {
         id: 0,
-    name: '',
-    credit:0,
-    totalprice:0,
-    createddated: new Date().toISOString(),
-    createdby: '',
-    major_id: 0
+        name: '',
+        credit: 0,
+        totalprice: 0,
+        createddated: new Date().toISOString(),
+        createdby: '',
+        major_id: 0
 
     }
     modelmajor.value = null
-   
+
     loading.value = false
 
 }
 async function onSubmit() {
-    var totalprice=course_value.value.credit*1000000
+    var totalprice = course_value.value.credit * 1000000
     var a: CourseCreate = {
         name: course_value.value.name || '',
         credit: course_value.value.credit || 0,
-        totalprice: totalprice ,
+        totalprice: totalprice,
         createddated: new Date().toISOString(),
         createdby: info.value.fullname || '',
         major_id: modelmajor.value ? modelmajor.value.value : null,
-        
+
     }
     const res = await api.course.createcourseCoursePost(a)
         .then(res => res.data).finally(() => { loading.value = false })
     courses.value.push(res)
     course_value.value.name = ''
-    course_value.value.credit=0
-    course_value.value.totalprice=0
+    course_value.value.credit = 0
+    course_value.value.totalprice = 0
     modelmajor.value = null
 
 
@@ -236,7 +236,7 @@ async function onSubmit() {
 function canceledit() {
     course_value.value.id = 0
     course_value.value.name = ''
-    course_value.value.credit=0
+    course_value.value.credit = 0
     course_value.value.createddated = new Date().toISOString()
     course_value.value.createdby = ''
     course_value.value.major_id = 0
