@@ -4,6 +4,7 @@ from core.security import AuthUser, current_user,Role
 from typing import Annotated
 from model.enrollment import EnrollmentCreate,Enrollment,EnrollmentUpdate
 from crud import enrollment as crud_enrollment
+from middleware.rate_limited import rate_limiter
 
 router = APIRouter()
 @router.get("/",dependencies=[Depends(Role(["admin","teacher","student"]))])
@@ -21,7 +22,7 @@ async def getenrollmentid(id:int,db=Depends(connection))->Enrollment:
    opencourse=crud_enrollment.getenrollment_id(db=db,id=id)
    return opencourse
 
-@router.post("/",dependencies=[Depends(Role(["admin","teacher","student"]))])
+@router.post("/",dependencies=[Depends(Role(["admin","teacher","student"])),Depends(rate_limiter)])
 async def registerenrollment(data:EnrollmentCreate,db=Depends(connection))->Enrollment:
    enrollment=crud_enrollment.regiter_enrollment(db=db,data=data)
    return enrollment

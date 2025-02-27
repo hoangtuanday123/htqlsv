@@ -22,6 +22,7 @@ async def login(data: Annotated[OAuth2PasswordRequestForm, Depends()],db=Depends
         user=AuthUser(id=str(account.id),email=account.email,fullname=account.fullname,role=role.role_name)
         
         return await _release_token(user)
+    raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail="Not authenticated")
 
 async def _release_token(user:AuthUser)->Token:
     token_str=create_token(user)

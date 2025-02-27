@@ -129,7 +129,24 @@ def regiter_enrollment(db:Session,data:EnrollmentCreate):
         db.commit()
         db.refresh(db_enrollment)
         return getenrollment_id(db=db,id=db_enrollment.id)
-
+    return Enrollment_data(id=0,
+                        createddated=datetime.now(),
+                        createdby='',
+                        grade_theory=0,
+                        grade_practice=0,
+                        grade_bonus=0,
+                        GPA=0,
+                        status='',
+                        student_id=None,
+                        student=None,
+                        open_course_id=None,
+                        timetheory=None,
+                        timepractice=None,
+                        course=None,
+                        instructor_theory=None,
+                        instructor_practice=None,
+                        semester=None,
+                        classroom=None)
 
 def update_enrollment(db:Session,id:int,data:EnrollmentUpdate):
     stmt = update(Enrollment).where(Enrollment.id == id).values(grade_theory=data.grade_theory,grade_practice=data.grade_practice,

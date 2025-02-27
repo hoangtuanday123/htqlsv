@@ -156,18 +156,30 @@ async function addenrollment(opencourse: Opencourse) {
         student_id: Number(info.value.id),
         open_course_id: Number(opencourse.id)
     }
-    const res = await api.enrollment.registerenrollmentEnrollmentPost(a)
-        .then(res => res.data)
-    const res_opencourse = await api.opencourse.increasedopencourseOpencourseIdIncreasedPatch(Number(opencourse.id))
-        .then(res => res.data)
-    let index = opencourses.value.findIndex(item => item.id === Number(opencourse.id));
-    opencourses.value.splice(index, 1)
-    opencourses.value.push(res_opencourse)
+    try {
+        const res = await api.enrollment.registerenrollmentEnrollmentPost(a)
+            .then(res => res.data)
+        if (res.id != 0) {
+            const res_opencourse = await api.opencourse.increasedopencourseOpencourseIdIncreasedPatch(Number(opencourse.id))
+                .then(res => res.data)
+            let index = opencourses.value.findIndex(item => item.id === Number(opencourse.id));
+            opencourses.value.splice(index, 1)
+            opencourses.value.push(res_opencourse)
+            enrollments.value.push(res);
+        }
+
+    }
+    catch (error) {
+        console.error('An error occurred:', error.message);
+    }
+    finally {
+        loading.value = false
+    }
 
 
 
-    enrollments.value.push(res);
-    loading.value = false
+
+
 }
 
 onMounted(async () => {
